@@ -4,12 +4,15 @@ function updateMap() {
     fetch("/data.json")
         .then(response => response.json())
         .then(rsp => {
-            // console.log(rsp.data)
+         
             rsp.data.forEach(element => {
                 latitude = element.latitude;
                 longitude = element.longitude;
                 cases = element.infected;
-
+                
+                
+                
+//Storing Value in temp variable
                 temp.push({
                     'type': 'Feature',
                     'properties': {
@@ -58,7 +61,7 @@ setInterval(updateMap(), interval);
 
 
 
-//Hover POPup
+//Hover POPUP
 
 map.on('load', function () {
     map.addSource('places', {
@@ -93,15 +96,11 @@ map.on('load', function () {
         var coordinates = e.features[0].geometry.coordinates.slice();
         var description = e.features[0].properties.description;
 
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
+      
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
         }
 
-        // Populate the popup and set its coordinates
-        // based on the feature found.
         popup
             .setLngLat(coordinates)
             .setHTML(description)
